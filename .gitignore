@@ -2,5 +2,8 @@
 
 model.json
 model.csv
+assets_clean.json
+assets_desc_clean.json
+test.json
 
 logs/*

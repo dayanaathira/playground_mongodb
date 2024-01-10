@@ -78,6 +78,7 @@ async function cleanupAssets() {
             for (const ass of c_assets) {
                 if (ass._id) {
                     if (ass.createdAt && ass.updatedAt) {
+                        // to set _id, createdAt and updateAt based on mongo express
                         jsonString = JSON.stringify({
                             ...ass,
                             "_id": "ObjectId('" + new ObjectId(ass._id) + "')",
@@ -86,13 +87,14 @@ async function cleanupAssets() {
                         }, null, 2);
 
                     } else {
+                        // to set _id, createdAt and updateAt based on mongo express
                         jsonString = JSON.stringify({
                             ...ass,
                             "_id": "ObjectId('" + new ObjectId(ass._id) + "')",
                         }, null, 2);
                     }
                 }
-                // await fs.appendFileSync('assets_clean.json', jsonString + ',\n');
+                await fs.appendFileSync('assets_clean.json', jsonString + ',\n');
                 logger.info(`[Write file assets] Successfully write file`);
             }
 
@@ -100,6 +102,7 @@ async function cleanupAssets() {
             for (const x of c_asset_desc) {
                 if (x._id) {
                     if (x.createdAt && x.updatedAt) {
+                        // to set _id, createdAt and updateAt based on mongo express
                         jsonString = JSON.stringify({
                             ...x,
                             "_id": "ObjectId('" + new ObjectId(x._id) + "')",
@@ -107,13 +110,14 @@ async function cleanupAssets() {
                             "updatedAt": "ISODate('" + x.updatedAt.toISOString() + "')"
                         }, null, 2);
                     } else {
+                        // to set _id, createdAt and updateAt based on mongo express
                         jsonString = JSON.stringify({
                             ...x,
                             "_id": "ObjectId('" + new ObjectId(x._id) + "')",
                         }, null, 2);
                     }
                 }
-                // await fs.appendFileSync('assets_desc_clean.json', jsonString + ',\n');
+                await fs.appendFileSync('assets_desc_clean.json', jsonString + ',\n');
                 logger.info(`[Write file asset_desc] Successfully write file`);
             }
         } catch (error) {
