@@ -1,0 +1,6 @@
+/node_modules
+
+model.json
+model.csv
+
+logs/*
