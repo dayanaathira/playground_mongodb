@@ -1,5 +1,5 @@
 const { MongoClient, ObjectId } = require('mongodb');
-const fs = require('fs').promises;
+const fs = require('node:fs');
 const csv = require('fast-csv');
 const logger = require('./util/logger');
 
@@ -31,7 +31,7 @@ async function cleanupAssets() {
             try {
                 // find and delete tenant_id
                 const rmTenantId = await assetDescCollection.findOneAndUpdate({ _id: new ObjectId(doc_id) }, { $unset: { tenant_id: 1 } });
-                logger.info(`[asset_desc collection] Successful remove tenant_id`);
+                logger.info(`[asset_desc collection] Successfully remove tenant_id`);
             } catch (error) {
                 logger.error(`[asset_desc collection] Error rm tenant_id: ${error}`);
             }
@@ -43,14 +43,14 @@ async function cleanupAssets() {
                         try {
                             // lookup asset_desc_id and replace asset_desc_id to new
                             const a_desc_id = await assetCollection.updateMany({ asset_desc_id: doc_id.toString() }, { $set: { asset_desc_id: nameObj[model].id.toString() } });
-                            logger.info(`[assets collection] Successful update asset_desc_id`);
+                            logger.info(`[assets collection] Successfully update asset_desc_id`);
                         } catch (error) {
                             logger.error(`[assets collection] Error to update asset_desc_id: ${error}`);
                         }
                         try {
-                            // findbyId and delete the documents asset document
+                            // findbyId and delete the documents for asset_desc of duplicate
                             const rmDocument = await assetDescCollection.findOneAndDelete({ _id: new ObjectId(doc_id) });
-                            logger.info(`[asset_desc collection] Successful remove duplicate document`);
+                            logger.info(`[asset_desc collection] Successfully remove duplicate document`);
                         } catch (error) {
                             logger.error(`[asset_desc collection] Error rm duplicate document: ${error}`);
                         }
@@ -68,8 +68,57 @@ async function cleanupAssets() {
             }
         }
 
-        // To export the updated data into json
+        // Retrieve cleanup data
+        const c_assets = await assetCollection.find({ delete_flag: { $exists: false } }).toArray();
+        const c_asset_desc = await assetDescCollection.find({ delete_flag: { $exists: false } }).toArray();
 
+        let jsonString = {};
+        try {
+            // to write assets collection cleanup data
+            for (const ass of c_assets) {
+                if (ass._id) {
+                    if (ass.createdAt && ass.updatedAt) {
+                        jsonString = JSON.stringify({
+                            ...ass,
+                            "_id": "ObjectId('" + new ObjectId(ass._id) + "')",
+                            "createdAt": "ISODate('" + ass.createdAt.toISOString() + "')",
+                            "updatedAt": "ISODate('" + ass.updatedAt.toISOString() + "')"
+                        }, null, 2);
+
+                    } else {
+                        jsonString = JSON.stringify({
+                            ...ass,
+                            "_id": "ObjectId('" + new ObjectId(ass._id) + "')",
+                        }, null, 2);
+                    }
+                }
+                // await fs.appendFileSync('assets_clean.json', jsonString + ',\n');
+                logger.info(`[Write file assets] Successfully write file`);
+            }
+
+            // to write assets_desc collection cleanup data
+            for (const x of c_asset_desc) {
+                if (x._id) {
+                    if (x.createdAt && x.updatedAt) {
+                        jsonString = JSON.stringify({
+                            ...x,
+                            "_id": "ObjectId('" + new ObjectId(x._id) + "')",
+                            "createdAt": "ISODate('" + x.createdAt.toISOString() + "')",
+                            "updatedAt": "ISODate('" + x.updatedAt.toISOString() + "')"
+                        }, null, 2);
+                    } else {
+                        jsonString = JSON.stringify({
+                            ...x,
+                            "_id": "ObjectId('" + new ObjectId(x._id) + "')",
+                        }, null, 2);
+                    }
+                }
+                // await fs.appendFileSync('assets_desc_clean.json', jsonString + ',\n');
+                logger.info(`[Write file asset_desc] Successfully write file`);
+            }
+        } catch (error) {
+            logger.error(`[Error write file]: ${error}`);
+        }
 
     } finally {
         await client.close();
