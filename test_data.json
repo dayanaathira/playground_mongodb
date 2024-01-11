@@ -1,0 +1,341 @@
+{
+  "_id": ObjectId('5ff72cc281429503fd40eec3'),
+  "reg_id": "BLW6028",
+  "asset_desc_id": "5f4625f1acfa259b2b4e3201",
+  "tenant_id": "5ea53b46f78bc3001a88e3ff",
+  "l1": "5ff6dd9ae35bbed8481e65a0",
+  "l2": "5ff6e297e35bbed848223fa0",
+  "l3": "5ff6f6bee35bbed84831a981",
+  "b1": "635a74666089e200185883ad",
+  "b2": "6369b8ddf177330013f77971",
+  "card": {
+    "username": "MUHAMMAD@EMAIL.COM",
+    "name": "MUHAMMAD",
+    "staff_id": "D00876",
+    "assigned_date": 1670860800000
+  },
+  "b3": "63cea5150d91cf0019cad17f",
+  "odo": {
+    "init": 71560
+  },
+  "base_station_id": "5f488d37f6f3ae05066a3049",
+  "category": "Commercial",
+  "speed_limit": 90,
+  "reg_date_": "08-Nov-12",
+  "reg_date": 1352304000000,
+  "puspakom_date": null,
+  "roadtax_date": null,
+  "insurance_date": null,
+  "last_service_date": null,
+  "distance_limit": 50,
+  "updatedAt": ISODate('2022-07-25T15:36:24.999Z'),
+  "image_id": "600a5f169736742d4b717d1d",
+  "image_url": "https://ik.imagekit.io/conves/conves_vehicle/conves_AFZAN_TMRND.COM.MY_5ff72cc281429503fd40eec3_wPKCK1_U9",
+  "imei": "354762112501033",
+  "rfid_status": 0,
+  "sim_card": {
+    "phone_number": "601165700543"
+  },
+  "battery_on": 13.7,
+  "installation_flag": true,
+  "installation_log": [
+    {
+      "_id": "600a5f93e0f9a4001859dfaa",
+      "timestamp": 1611292563491,
+      "installer_id": "5fd8725d0420ce001252d414"
+    }
+  ],
+  "at_command_log": [
+    {
+      "at_command": "AT$EGNS=135,10,131,10\r\n",
+      "timestamp": 1611292563000
+    }
+  ],
+  "log": [
+    {
+      "timestamp": 1611292563491,
+      "installer_id": "5fd8725d0420ce001252d414",
+      "method": "PUT",
+      "url": "/installers/device",
+      "action": "obd_install",
+      "imei": "354762112501033"
+    }
+  ],
+  "warranty_expirydate": 1769835780000,
+  "at_command": "AT$OUTC=9,1,600,1,14\r\n",
+  "updated_at": 1656572192220,
+  "geofence_id": []
+},
+{
+  "_id": ObjectId('5ff72cc281429503fd40eec5'),
+  "reg_id": "BLW6392",
+  "asset_desc_id": "5f4625f1acfa259b2b4e3201",
+  "tenant_id": "5ea53b46f78bc3001a88e3ff",
+  "l1": "5ff6dd9ae35bbed8481e65a0",
+  "l2": "5ff6e297e35bbed848223fa0",
+  "l3": "5ff6f6bee35bbed84831a981",
+  "odo": {
+    "init": 49413
+  },
+  "base_station_id": "5f488d37f6f3ae05066a3049",
+  "category": "Commercial",
+  "speed_limit": 90,
+  "reg_date_": "09-Nov-12",
+  "reg_date": 1352390400000,
+  "puspakom_date": null,
+  "roadtax_date": null,
+  "insurance_date": null,
+  "last_service_date": null,
+  "distance_limit": 50,
+  "log": [
+    {
+      "_id": "605000e7d9818300126e3044",
+      "timestamp": 1615855845407,
+      "installer_id": "600a2232e0f9a4001859df60",
+      "method": "PUT",
+      "url": "/installers/vehicle/assign",
+      "action": "obd_assign",
+      "imei": "354762112506446"
+    },
+    {
+      "_id": "6050016457dd20001247365b",
+      "timestamp": 1615855972039,
+      "installer_id": "600a2232e0f9a4001859df60",
+      "method": "PUT",
+      "url": "/installers/device",
+      "action": "obd_install",
+      "imei": "354762112506446"
+    },
+    {
+      "_id": "62f36b6a1ebe4a001cb2753f",
+      "timestamp": 1660119914733,
+      "installer_id": "5ff84859ebb5b70019d488eb",
+      "method": "PUT",
+      "url": "/installers/device/uninstall",
+      "action": "obd_uninstall",
+      "imei": "354762112506446"
+    },
+    {
+      "_id": "64882933ee94270018f8bf71",
+      "timestamp": 1686645039364,
+      "installer_id": "600a373ce0f9a4001859df6c",
+      "method": "PUT",
+      "url": "/installers/test/multipart/vehicle/assign",
+      "action": "obd_assign",
+      "imei": "353161078060590"
+    },
+    {
+      "_id": "64882eccee94270018f8bf74",
+      "timestamp": 1686646473486,
+      "installer_id": "600a373ce0f9a4001859df6c",
+      "method": "PUT",
+      "url": "/installers/test/multipart/vehicle/assign",
+      "action": "obd_assign",
+      "imei": "353161078060590"
+    },
+    {
+      "_id": "64882f5eee94270018f8bf77",
+      "timestamp": 1686646618917,
+      "installer_id": "600a373ce0f9a4001859df6c",
+      "method": "PUT",
+      "url": "/installers/test/multipart/vehicle/assign",
+      "action": "obd_assign",
+      "imei": "353161078060590"
+    },
+    {
+      "_id": "64882f76ee94270018f8bf7a",
+      "timestamp": 1686646642931,
+      "installer_id": "600a373ce0f9a4001859df6c",
+      "method": "PUT",
+      "url": "/installers/test/multipart/vehicle/assign",
+      "action": "obd_assign",
+      "imei": "353161078060590"
+    },
+    {
+      "_id": "648921beee94270018f8bfa2",
+      "timestamp": 1686708667832,
+      "installer_id": "600a373ce0f9a4001859df6c",
+      "method": "PUT",
+      "url": "/installers/test/multipart/vehicle/assign",
+      "action": "obd_assign",
+      "imei": "353161078060590"
+    },
+    {
+      "_id": "648922b2ee94270018f8bfa5",
+      "timestamp": 1686708911125,
+      "installer_id": "600a373ce0f9a4001859df6c",
+      "method": "PUT",
+      "url": "/installers/test/multipart/vehicle/assign",
+      "action": "obd_assign",
+      "imei": "353161078060590"
+    },
+    {
+      "_id": "64892a38ee94270018f8bfac",
+      "timestamp": 1686710838128,
+      "installer_id": "600a373ce0f9a4001859df6c",
+      "method": "PUT",
+      "url": "/installers/test/multipart/vehicle/assign",
+      "action": "obd_assign",
+      "imei": "353161078060590"
+    },
+    {
+      "_id": "648abecadbc5410019781b8a",
+      "timestamp": 1686814410091,
+      "installer_id": "600a373ce0f9a4001859df6c",
+      "method": "PUT",
+      "url": "/installers/device/uninstall",
+      "action": "obd_unassign",
+      "imei": "353161078060590"
+    },
+    {
+      "_id": "64c1db578ba0f10019094213",
+      "timestamp": 1690426197189,
+      "installer_id": "600a373ce0f9a4001859df6c",
+      "method": "PUT",
+      "url": "/installers/test/multipart/vehicle/assign",
+      "action": "obd_assign",
+      "imei": "353161078060590"
+    },
+    {
+      "_id": "64c1db648ba0f10019094217",
+      "timestamp": 1690426212339,
+      "installer_id": "600a373ce0f9a4001859df6c",
+      "method": "PUT",
+      "url": "/installers/device/uninstall",
+      "action": "obd_unassign",
+      "imei": "353161078060590"
+    },
+    {
+      "_id": "64c1db768ba0f10019094219",
+      "timestamp": 1690426228138,
+      "installer_id": "600a373ce0f9a4001859df6c",
+      "method": "PUT",
+      "url": "/installers/test/multipart/vehicle/assign",
+      "action": "obd_assign",
+      "imei": "353161077793191"
+    },
+    {
+      "_id": "64c1db858ba0f1001909421e",
+      "timestamp": 1690426245017,
+      "installer_id": "600a373ce0f9a4001859df6c",
+      "method": "PUT",
+      "url": "/installers/device/uninstall",
+      "action": "obd_unassign",
+      "imei": "353161077793191"
+    },
+    {
+      "_id": "64c714ecaa77ef0019f0b51a",
+      "timestamp": 1690768617924,
+      "installer_id": "600a373ce0f9a4001859df6c",
+      "method": "PUT",
+      "url": "/installers/test/multipart/vehicle/assign",
+      "action": "obd_assign",
+      "imei": "353161078060590"
+    },
+    {
+      "_id": "64c717b3aa77ef0019f0b51e",
+      "timestamp": 1690769331246,
+      "installer_id": "600a373ce0f9a4001859df6c",
+      "method": "PUT",
+      "url": "/installers/device/uninstall",
+      "action": "obd_unassign",
+      "imei": "353161078060590"
+    },
+    {
+      "_id": "64c87000aa77ef0019f0b55a",
+      "timestamp": 1690857469726,
+      "installer_id": "600a373ce0f9a4001859df6c",
+      "method": "PUT",
+      "url": "/installers/test/multipart/vehicle/assign",
+      "action": "obd_assign",
+      "imei": "353161077123753"
+    },
+    {
+      "_id": "64c87010aa77ef0019f0b55e",
+      "timestamp": 1690857488669,
+      "installer_id": "600a373ce0f9a4001859df6c",
+      "method": "PUT",
+      "url": "/installers/device/uninstall",
+      "action": "obd_unassign",
+      "imei": "353161077123753"
+    },
+    {
+      "_id": "64c8703daa77ef0019f0b560",
+      "timestamp": 1690857530858,
+      "installer_id": "600a373ce0f9a4001859df6c",
+      "method": "PUT",
+      "url": "/installers/test/multipart/vehicle/assign",
+      "action": "obd_assign",
+      "imei": "353161077793191"
+    }
+  ],
+  "installation_log": [
+    {
+      "_id": "6050016457dd20001247365c",
+      "timestamp": 1615855972039,
+      "installer_id": "600a2232e0f9a4001859df60"
+    }
+  ],
+  "warranty_expirydate": 1774904580000,
+  "at_command_log": [
+    {
+      "at_command": "AT$EGNS=148,10,144,10\r\n",
+      "timestamp": 1615855973000
+    }
+  ],
+  "geofence_id": [],
+  "image_id": "64c8703d06370748f2930dd1",
+  "image_url": "https://ik.imagekit.io/conves/conves_vehicle_test/conves_ASBAN_TMRND.COM.MY_5ff72cc281429503fd40eec5_mVlHs8sbJ",
+  "imei": "353161077793191",
+  "rfid_status": 0,
+  "sim_card": {
+    "phone_number": "0153330034"
+  }
+},
+{
+  "_id": ObjectId('5ff72cc381429503fd40f050'),
+  "reg_id": "BMW4134",
+  "asset_desc_id": "5f4625f1acfa259b2b4e3201",
+  "tenant_id": "5ea53b46f78bc3001a88e3ff",
+  "l1": "5ff6dd9ee35bbed8481e6925",
+  "l2": "5ff6e2a0e35bbed84822466a",
+  "l3": "5ff6f744e35bbed84832149b",
+  "odo": {
+    "init": 0
+  },
+  "base_station_id": "5f488d37f6f3ae05066a2fae",
+  "category": "Commercial",
+  "speed_limit": 90,
+  "reg_date_": "09-Oct-14",
+  "reg_date": 1412784000000,
+  "puspakom_date": null,
+  "roadtax_date": null,
+  "insurance_date": null,
+  "last_service_date": null,
+  "distance_limit": 50,
+  "createdAt": ISODate('2021-06-03T13:47:48.509Z')
+},
+{
+  "_id": ObjectId('5ff72cc381429503fd40f5d6'),
+  "reg_id": "SAC8923B",
+  "asset_desc_id": "5f4625f1acfa259b2b4e31f1",
+  "tenant_id": "5ea53b46f78bc3001a88e3ff",
+  "l1": "5ff6df28e35bbed8481f99c9",
+  "l2": "5ff6e5b3e35bbed84824ab7e",
+  "l3": "5ff6fa88e35bbed848349ca5",
+  "odo": {
+    "init": 0
+  },
+  "base_station_id": "5f488d37f6f3ae05066a2fac",
+  "category": "Private Company",
+  "speed_limit": 110,
+  "reg_date_": "03-Aug-16",
+  "reg_date": 1470153600000,
+  "puspakom_date": null,
+  "roadtax_date": null,
+  "insurance_date": null,
+  "last_service_date": null,
+  "distance_limit": 50,
+  "updatedAt": ISODate('2021-06-03T13:48:00.483Z'),
+  "createdAt": ISODate('2021-06-03T13:49:00.483Z')
+},

@@ -12,8 +12,8 @@ async function cleanupAssets() {
         logger.info('Connected to the database');
 
         const database = client.db('convesvh');
-        const assetDescCollection = database.collection('asset_desc_test');
-        const assetCollection = database.collection('assets_test');
+        const assetDescCollection = database.collection('test_desc_data');
+        const assetCollection = database.collection('test_data');
 
 
         // Get all documents in asset_desc & assets collection
@@ -73,7 +73,10 @@ async function cleanupAssets() {
         const c_asset_desc = await assetDescCollection.find({ delete_flag: { $exists: false } }).toArray();
 
         let jsonString = {};
+        let updJson;
         try {
+            await fs.writeFileSync('test_desc_data.json', '');
+            await fs.writeFileSync('test_data.json', '');
             // to write assets collection cleanup data
             for (const ass of c_assets) {
                 if (ass._id) {
@@ -86,15 +89,89 @@ async function cleanupAssets() {
                             "updatedAt": "ISODate('" + ass.updatedAt.toISOString() + "')"
                         }, null, 2);
 
+                        try {
+                            // Define an array of patterns and their replacements
+                            const patternsAndReplacements = [
+                                { pattern: /"_id": "ObjectId\('(\w+)'\)"/g, replacement: '"_id": ObjectId(\'$1\')' },
+                                { pattern: /"updatedAt": "(ISODate\('\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}.\d{3}Z'\))"/g, replacement: '"updatedAt": $1' },
+                                { pattern: /"createdAt": "(ISODate\('\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}.\d{3}Z'\))"/g, replacement: '"createdAt": $1' },
+                            ];
+
+                            updJson = jsonString;
+                            patternsAndReplacements.forEach(({ pattern, replacement }) => {
+                                updJson = updJson.replace(pattern, replacement);
+                            });
+
+                        } catch (error) {
+                            logger.error(`Can not replace _id, createdAt and updatedAt to the dessire pattern: ${error}`);
+                        }
+
                     } else {
-                        // to set _id, createdAt and updateAt based on mongo express
-                        jsonString = JSON.stringify({
-                            ...ass,
-                            "_id": "ObjectId('" + new ObjectId(ass._id) + "')",
-                        }, null, 2);
+                        if (ass.createdAt && !ass.updatedAt) {
+                            // to set _id, createdAt and updateAt based on mongo express
+                            jsonString = JSON.stringify({
+                                ...ass,
+                                "_id": "ObjectId('" + new ObjectId(ass._id) + "')",
+                                "createdAt": "ISODate('" + ass.createdAt.toISOString() + "')"
+                            }, null, 2);
+
+                            try {
+                                // Define an array of patterns and their replacements
+                                const patternsAndReplacements = [
+                                    { pattern: /"_id": "ObjectId\('(\w+)'\)"/g, replacement: '"_id": ObjectId(\'$1\')' },
+                                    { pattern: /"createdAt": "(ISODate\('\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}.\d{3}Z'\))"/g, replacement: '"createdAt": $1' },
+                                ];
+
+                                updJson = jsonString;
+                                patternsAndReplacements.forEach(({ pattern, replacement }) => {
+                                    updJson = updJson.replace(pattern, replacement);
+                                });
+
+                            } catch (error) {
+                                logger.error(`Can not replace _id and createdAt to the dessire pattern: ${error}`);
+                            }
+                        } else if (ass.updatedAt && !ass.createdAt) {
+                            // to set _id, createdAt and updateAt based on mongo express
+                            jsonString = JSON.stringify({
+                                ...ass,
+                                "_id": "ObjectId('" + new ObjectId(ass._id) + "')",
+                                "updatedAt": "ISODate('" + ass.updatedAt.toISOString() + "')"
+                            }, null, 2);
+
+                            try {
+                                // Define an array of patterns and their replacements
+                                const patternsAndReplacements = [
+                                    { pattern: /"_id": "ObjectId\('(\w+)'\)"/g, replacement: '"_id": ObjectId(\'$1\')' },
+                                    { pattern: /"updatedAt": "(ISODate\('\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}.\d{3}Z'\))"/g, replacement: '"updatedAt": $1' },
+                                ];
+
+                                updJson = jsonString;
+                                patternsAndReplacements.forEach(({ pattern, replacement }) => {
+                                    updJson = updJson.replace(pattern, replacement);
+                                });
+
+                            } catch (error) {
+                                logger.error(`Can not replace _id and updatedAt to the dessire pattern: ${error}`);
+                            }
+                        } else {
+                            // to set _id, createdAt and updateAt based on mongo express
+                            jsonString = JSON.stringify({
+                                ...ass,
+                                "_id": "ObjectId('" + new ObjectId(ass._id) + "')",
+                            }, null, 2);
+
+                            try {
+                                // To change pattern for _id field from string to not string
+                                const currPattern = /"_id": "ObjectId\('(\w+)'\)"/g;
+                                updJson = jsonString.replace(currPattern, '"_id": ObjectId(\'$1\')');
+
+                            } catch (error) {
+                                logger.error(`Can not replace _id to the dessire pattern: ${error}`);
+                            }
+                        }
                     }
                 }
-                await fs.appendFileSync('assets_clean.json', jsonString + ',\n');
+                await fs.appendFileSync('test_data.json', updJson + ',\n');
                 logger.info(`[Write file assets] Successfully write file`);
             }
 
@@ -109,15 +186,92 @@ async function cleanupAssets() {
                             "createdAt": "ISODate('" + x.createdAt.toISOString() + "')",
                             "updatedAt": "ISODate('" + x.updatedAt.toISOString() + "')"
                         }, null, 2);
+
+                        // to change pattern
+                        try {
+                            // define an array of patterns and their replacements
+                            const patternsAndReplacements = [
+                                { pattern: /"_id": "ObjectId\('(\w+)'\)"/g, replacement: '"_id": ObjectId(\'$1\')' },
+                                { pattern: /"updatedAt": "(ISODate\('\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}.\d{3}Z'\))"/g, replacement: '"updatedAt": $1' },
+                                { pattern: /"createdAt": "(ISODate\('\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}.\d{3}Z'\))"/g, replacement: '"createdAt": $1' },
+                            ];
+
+                            updJson = jsonString;
+                            patternsAndReplacements.forEach(({ pattern, replacement }) => {
+                                updJson = updJson.replace(pattern, replacement);
+                            });
+
+                        } catch (error) {
+                            logger.error(`Can not replace _id, updatedAt and createdAt to the dessire pattern: ${error}`);
+                        }
+
                     } else {
-                        // to set _id, createdAt and updateAt based on mongo express
-                        jsonString = JSON.stringify({
-                            ...x,
-                            "_id": "ObjectId('" + new ObjectId(x._id) + "')",
-                        }, null, 2);
+                        if (x.createdAt && !x.updatedAt) {
+                            // to set _id, createdAt and updateAt based on mongo express
+                            jsonString = JSON.stringify({
+                                ...x,
+                                "_id": "ObjectId('" + new ObjectId(x._id) + "')",
+                                "createdAt": "ISODate('" + x.createdAt.toISOString() + "')"
+                            }, null, 2);
+
+                            try {
+                                // Define an array of patterns and their replacements
+                                const patternsAndReplacements = [
+                                    { pattern: /"_id": "ObjectId\('(\w+)'\)"/g, replacement: '"_id": ObjectId(\'$1\')' },
+                                    { pattern: /"createdAt": "(ISODate\('\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}.\d{3}Z'\))"/g, replacement: '"createdAt": $1' },
+                                ];
+
+                                updJson = jsonString;
+                                patternsAndReplacements.forEach(({ pattern, replacement }) => {
+                                    updJson = updJson.replace(pattern, replacement);
+                                });
+
+                            } catch (error) {
+                                logger.error(`Can not replace _id and createdAt to the dessire pattern: ${error}`);
+                            }
+                        } else if (x.updatedAt && !x.createdAt) {
+                            // to set _id, createdAt and updateAt based on mongo express
+                            jsonString = JSON.stringify({
+                                ...x,
+                                "_id": "ObjectId('" + new ObjectId(x._id) + "')",
+                                "updatedAt": "ISODate('" + x.updatedAt.toISOString() + "')"
+                            }, null, 2);
+
+                            try {
+                                // Define an array of patterns and their replacements
+                                const patternsAndReplacements = [
+                                    { pattern: /"_id": "ObjectId\('(\w+)'\)"/g, replacement: '"_id": ObjectId(\'$1\')' },
+                                    { pattern: /"updatedAt": "(ISODate\('\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}.\d{3}Z'\))"/g, replacement: '"updatedAt": $1' },
+                                ];
+
+                                updJson = jsonString;
+                                patternsAndReplacements.forEach(({ pattern, replacement }) => {
+                                    updJson = updJson.replace(pattern, replacement);
+                                });
+
+                            } catch (error) {
+                                logger.error(`Can not replace _id and updatedAt to the dessire pattern: ${error}`);
+                            }
+                        } else {
+                            // to set _id, createdAt and updateAt based on mongo express
+                            jsonString = JSON.stringify({
+                                ...x,
+                                "_id": "ObjectId('" + new ObjectId(x._id) + "')",
+                            }, null, 2);
+
+                            try {
+                                // To change pattern for _id field from string to not string
+                                const currPattern = /"_id": "ObjectId\('(\w+)'\)"/g;
+                            
+                                updJson = jsonString.replace(currPattern, '"_id": ObjectId(\'$1\')');
+
+                            } catch (error) {
+                                logger.error(`Can not replace _id to the dessire pattern: ${error}`);
+                            }
+                        }
                     }
                 }
-                await fs.appendFileSync('assets_desc_clean.json', jsonString + ',\n');
+                await fs.appendFileSync('test_desc_data.json', updJson + ',\n');
                 logger.info(`[Write file asset_desc] Successfully write file`);
             }
         } catch (error) {

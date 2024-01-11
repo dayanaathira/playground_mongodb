@@ -1,0 +1,38 @@
+{
+  "_id": ObjectId('5f4625f1acfa259b2b4e31ef'),
+  "asset_type": "4WC",
+  "asset_type_desc": "4WD CREW CAB",
+  "model": "FORD RANGER XLT 4X4 ( UT2G )",
+  "brand": "FORD",
+  "fuel_tank_size": 80,
+  "fuel_consumption": 8,
+  "fuel_type": "D"
+},
+{
+  "_id": ObjectId('632dd8d54825a70006887883'),
+  "model": "PERODUA AXIA 1.0G",
+  "brand": "PERODUA",
+  "asset_type": "LCP",
+  "asset_type_desc": "L.U. CAR PASSENGER",
+  "fuel_tank_size": 36,
+  "fuel_consumption": 20,
+  "fuel_type": "P",
+  "created_at": 1658714528660,
+  "createdAt": ISODate('2022-07-25T02:02:08.674Z'),
+  "updatedAt": ISODate('2022-07-25T02:02:08.674Z'),
+  "__v": 0
+},
+{
+  "_id": ObjectId('659ca6009360410018bf973a'),
+  "model": "X-Craft2000",
+  "brand": "Tesla",
+  "asset_type": "Model V",
+  "asset_type_desc": "2.0 ",
+  "fuel_tank_size": 110,
+  "fuel_consumption": 11,
+  "fuel_type": "P",
+  "created_at": 1704764928296,
+  "createdAt": ISODate('2024-01-09T01:48:48.306Z'),
+  "__v": 0,
+  "updated_at": 1704766063957
+},
