@@ -16,4 +16,4 @@ $ nodemon app.js
 "_id": ObjectId('$1')
 
 ## Stay in touch
-- Author - [dayana](https://gitlab.tmrnd.com.my/C00418)
+- Author - [dayana](https://github.com/dayanaathira/)
