@@ -5,5 +5,7 @@ model.csv
 assets_clean.json
 assets_desc_clean.json
 test.json
+test_data.json
+test_desc_data.json
 
 logs/*
