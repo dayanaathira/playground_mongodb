@@ -9,7 +9,7 @@ const logFormat = printf(({ level, message, timestamp }) => {
 
 const debugTransportToFile = new transports.DailyRotateFile({
   level: 'info',
-  filename:'engine-%DATE%.log',	
+  filename:'query-%DATE%.log',	
   dirname: './logs/',
   datePattern: 'YYYY-MM-DD',
   zippedArchive: true,
@@ -19,7 +19,7 @@ const debugTransportToFile = new transports.DailyRotateFile({
 
 const errorTransportToFile = new transports.DailyRotateFile({
   level: 'error',
-  filename:'engine-error-%DATE%.log',	
+  filename:'query-error-%DATE%.log',	
   dirname: './logs/',
   datePattern: 'YYYY-MM-DD',
   zippedArchive: true,
