@@ -11,9 +11,9 @@ async function cleanupAssets() {
         await client.connect();
         logger.info('Connected to the database');
 
-        const database = client.db('convesvh');
-        const assetDescCollection = database.collection('test_desc_data');
-        const assetCollection = database.collection('test_data');
+        const database = client.db('conves_staging');
+        const assetDescCollection = database.collection('asset_desc');
+        const assetCollection = database.collection('assets');
 
 
         // Get all documents in asset_desc & assets collection
@@ -37,26 +37,31 @@ async function cleanupAssets() {
             }
 
             if (model in nameObj) {
-                if (asset_type === nameObj[model].a_type) {
-                    if (asset_type_desc === nameObj[model].a_type_desc) {
-                        // lookup asset to check if that asset_desc_id being used at any document
-                        try {
-                            // lookup asset_desc_id and replace asset_desc_id to new
-                            const a_desc_id = await assetCollection.updateMany({ asset_desc_id: doc_id.toString() }, { $set: { asset_desc_id: nameObj[model].id.toString() } });
-                            logger.info(`[assets collection] Successfully update asset_desc_id`);
-                        } catch (error) {
-                            logger.error(`[assets collection] Error to update asset_desc_id: ${error}`);
-                        }
-                        try {
-                            // findbyId and delete the documents for asset_desc of duplicate
-                            const rmDocument = await assetDescCollection.findOneAndDelete({ _id: new ObjectId(doc_id) });
-                            logger.info(`[asset_desc collection] Successfully remove duplicate document`);
-                        } catch (error) {
-                            logger.error(`[asset_desc collection] Error rm duplicate document: ${error}`);
-                        }
+                if (asset_type === nameObj[model].a_type && asset_type_desc === nameObj[model].a_type_desc) {
+                    // lookup asset to check if that asset_desc_id being used at any document
+                    try {
+                        // lookup asset_desc_id and replace asset_desc_id to new
+                        const a_desc_id = await assetCollection.updateMany({ asset_desc_id: doc_id.toString() }, { $set: { asset_desc_id: nameObj[model].id.toString() } });
+                        logger.info(`[assets collection] Successfully update asset_desc_id`);
+                    } catch (error) {
+                        logger.error(`[assets collection] Error to update asset_desc_id: ${error}`);
                     }
+                    try {
+                        // findbyId and delete the documents for asset_desc of duplicate
+                        const rmDocument = await assetDescCollection.findOneAndDelete({ _id: new ObjectId(doc_id) });
+                        logger.info(`[asset_desc collection] Successfully remove duplicate document`);
+                    } catch (error) {
+                        logger.error(`[asset_desc collection] Error rm duplicate document: ${error}`);
+                    }
+                } else {
+                    // Create a new entry in nameObj
+                    nameObj[model] = {
+                        model_name: model,
+                        id: doc_id,
+                        a_type: asset_type,
+                        a_type_desc: asset_type_desc,
+                    };
                 }
-
             } else {
                 // Create a new entry in nameObj
                 nameObj[model] = {
@@ -76,21 +81,21 @@ async function cleanupAssets() {
         // let jsonString = {};
         try { 
             
-            await fs.writeFileSync('test_new.json', '');
-            await fs.writeFileSync('test_new_desc.json', '');
+            await fs.writeFileSync('assets_staging.json', '');
+            await fs.writeFileSync('assets_desc_staging.json', '');
 
             collections.forEach(async x => {
                 for (const data of x) {
                     if (x === c_assets && data._id) {
                         var result = await process(data);
-                        await fs.appendFileSync(`test_new.json`, result + ',\n');
-                        logger.info(`[Write file dataets] Successfully write file`);
+                        await fs.appendFileSync(`assets_staging.json`, result + ',\n');
+                        logger.info(`[Write file data sets] Successfully write file`);
                     }
                     
                     if (x === c_asset_desc && data._id){
                         var result = await process(data);
-                        await fs.appendFileSync(`test_new_desc.json`, result + ',\n');
-                        logger.info(`[Write file dataets] Successfully write file`);
+                        await fs.appendFileSync(`assets_desc_staging.json`, result + ',\n');
+                        logger.info(`[Write file data sets] Successfully write file`);
                     }
                     
                 }
