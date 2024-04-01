@@ -11,7 +11,7 @@ async function cleanupAssets() {
         await client.connect();
         logger.info('Connected to the database');
 
-        const database = client.db('conves_staging');
+        const database = client.db('staging');
         const assetDescCollection = database.collection('asset_desc');
         const assetCollection = database.collection('assets');
 
